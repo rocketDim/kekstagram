@@ -1,7 +1,6 @@
 "use strict";
 
-function getRandomPositiveInteger(a) {
-  var b = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+function getRandomPositiveInteger(a, b) {
   var lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   var upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
   var result = Math.random() * (upper - lower + 1) + lower;
