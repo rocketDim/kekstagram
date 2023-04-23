@@ -17,10 +17,13 @@ var fileField = document.querySelector('#upload-file');
 var hashtagField = document.querySelector('.text__hashtags');
 var commentField = document.querySelector('.text__description');
 var submitButton = form.querySelector('.img-upload__submit');
+var photoPreview = document.querySelector('.img-upload__preview img');
+var effectsPreviews = document.querySelectorAll('.effects__preview');
 var MAX_HASHTAG_COUNT = 5;
 var MIN_HASHTAG_LENGTH = 2;
 var MAX_HASHTAG_LENGTH = 20;
 var UNVALID_SYMBOLS = /[^a-zA-Z0-9а-яА-ЯёЁ]/g;
+var FILE_TYPES = ['jpg', 'jpeg', 'png'];
 var pristine = new Pristine(form, {
   classTo: 'img-upload__element',
   errorTextParent: 'img-upload__element',
@@ -56,11 +59,27 @@ function onEscKeyDown(evt) {
   }
 }
 
+var isValidType = function isValidType(file) {
+  var fileName = file.name.toLowerCase();
+  return FILE_TYPES.some(function (it) {
+    return fileName.endsWith(it);
+  });
+};
+
 var onCancelButtonClick = function onCancelButtonClick() {
   hideModal();
 };
 
 var onFileInputChange = function onFileInputChange() {
+  var file = fileField.files[0];
+
+  if (file && isValidType(file)) {
+    photoPreview.src = URL.createObjectURL(file);
+    effectsPreviews.forEach(function (preview) {
+      preview.style.backgroundImage = "url('".concat(photoPreview.src, "')");
+    });
+  }
+
   showModal();
 };
 

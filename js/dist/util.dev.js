@@ -3,7 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.showAlert = exports.getRandomArrayElement = exports.checkStringLength = exports.getRandomPositiveInteger = void 0;
+exports.debounce = exports.showAlert = exports.getRandomArrayElement = exports.checkStringLength = exports.getRandomPositiveInteger = void 0;
+
+var _this = void 0;
+
+var ALERT_SHOW_TIME = 5000;
 
 var getRandomPositiveInteger = function getRandomPositiveInteger(a, b) {
   var lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
@@ -45,3 +49,20 @@ var showAlert = function showAlert(message) {
 };
 
 exports.showAlert = showAlert;
+
+var debounce = function debounce(callback) {
+  var timeoutDelay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;
+  var timeoutId;
+  return function () {
+    for (var _len = arguments.length, rest = new Array(_len), _key = 0; _key < _len; _key++) {
+      rest[_key] = arguments[_key];
+    }
+
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(function () {
+      return callback.apply(_this, rest);
+    }, timeoutDelay);
+  };
+};
+
+exports.debounce = debounce;
